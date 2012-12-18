@@ -161,7 +161,9 @@ AVL* Delete(AVL* root, KEY_TYPE key)
 			AVL* temp = root->rchild;
 			while(temp->lchild)
 				temp = temp->lchild;
+			/* replace the value */
 			root->key = temp->key;
+			/* Delete the node (successor node) that should be really deleted */
 			root->rchild = Delete(root->rchild, temp->key);
 			root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
 		}
