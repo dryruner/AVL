@@ -111,30 +111,26 @@ AVL* RL_Rotate(AVL* k3)
 AVL* Insert(AVL* root, KEY_TYPE key)
 {
 	if(root == NULL)
-		root = New_Node(key, NULL, NULL);
+		return (root = New_Node(key, NULL, NULL));
 	else if(key < root->key)
-	{
 		root->lchild = Insert(root->lchild, key);
-		root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
-		if(getHeight(root->lchild) - getHeight(root->rchild) == 2)
-		{
-			if(key < root->lchild->key)
-				root = RR_Rotate(root);
-			else
-				root = LR_Rotate(root);
-		}
-	}
 	else //key >= root->key
-	{
 		root->rchild = Insert(root->rchild, key);
-		root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
-		if(getHeight(root->rchild) - getHeight(root->lchild) == 2)
-		{
-			if(key < root->rchild->key)
-				root = RL_Rotate(root);
-			else
-				root = LL_Rotate(root);
-		}
+	
+	root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
+	if(getHeight(root->lchild) - getHeight(root->rchild) == 2)
+	{
+		if(key < root->lchild->key)
+			root = RR_Rotate(root);
+		else
+			root = LR_Rotate(root);
+	}
+	else if(getHeight(root->rchild) - getHeight(root->lchild) == 2)
+	{
+		if(key < root->rchild->key)
+			root = RL_Rotate(root);
+		else
+			root = LL_Rotate(root);
 	}
 	return root;
 }
