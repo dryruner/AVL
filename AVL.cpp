@@ -28,7 +28,7 @@ inline int max(int a, int b)
 /* RR(Y rotates to the right):
 
         k2                   k1
-       /  \           		/  \
+       /  \                 /  \
       k1   Z     ==>       X   k2
      / \                      /  \
     X   Y                    Y    Z
