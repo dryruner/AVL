@@ -5,6 +5,7 @@ int main(int argc, char* argv[])
 {
 	AVL* root = NULL;
 	int vector[] = {15,6,18,3,7,17,20,2,4,13,9};
+//	int vector[] = {15};
 	const int length = sizeof(vector)/sizeof(int);
 	for(int i = 0; i< length;i++)
 		root = Insert(root, vector[i]);

@@ -155,6 +155,7 @@ AVL* Delete(AVL* root, KEY_TYPE key)
 			AVL* temp = root;
 			root = root->lchild;
 			delete(temp);
+			return root;
 		}
 		else
 		{
@@ -165,33 +166,27 @@ AVL* Delete(AVL* root, KEY_TYPE key)
 			root->key = temp->key;
 			/* Delete the node (successor node) that should be really deleted */
 			root->rchild = Delete(root->rchild, temp->key);
-			root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
 		}
-		return root;
 	}
 	else if(key < root->key)
-	{
 		root->lchild = Delete(root->lchild, key);
-		root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
-		if(getHeight(root->rchild) - getHeight(root->lchild) == 2)
-		{
-			if(getHeight(root->rchild->rchild) >= getHeight(root->rchild->lchild))
-				root = LL_Rotate(root);
-			else
-				root = RL_Rotate(root);
-		}
-	}
 	else
-	{
 		root->rchild = Delete(root->rchild, key);
-		root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
-		if(getHeight(root->lchild) - getHeight(root->rchild) == 2)
-		{
-			if(getHeight(root->lchild->lchild) >= getHeight(root->lchild->rchild))
-				root = RR_Rotate(root);
-			else
-				root = LR_Rotate(root);
-		}
+	
+	root->height = max(getHeight(root->lchild), getHeight(root->rchild)) + 1;
+	if(getHeight(root->rchild) - getHeight(root->lchild) == 2)
+	{
+		if(getHeight(root->rchild->rchild) >= getHeight(root->rchild->lchild))
+			root = LL_Rotate(root);
+		else
+			root = RL_Rotate(root);
+	}
+	else if(getHeight(root->lchild) - getHeight(root->rchild) == 2)
+	{
+		if(getHeight(root->lchild->lchild) >= getHeight(root->lchild->rchild))
+			root = RR_Rotate(root);
+		else
+			root = LR_Rotate(root);
 	}
 	return root;
 }
