@@ -11,7 +11,7 @@ typedef struct AVL{
 	struct AVL* rchild;
 }AVL;
 
-AVL* New_Node(KEY_TYPE key, AVL* lchild, AVL* rchild, int height = -1);
+AVL* New_Node(KEY_TYPE key, AVL* lchild, AVL* rchild, int height = 0);
 inline int getHeight(AVL* node);
 /*
  Return which the root pointer(at a higher level) should point to

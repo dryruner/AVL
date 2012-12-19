@@ -192,7 +192,12 @@ void InOrder(AVL* root)
 	if(root)
 	{
 		InOrder(root->lchild);
-		printf("%d ", root->key);
+		printf("key: %d height: %d ", root->key, root->height);
+		if(root->lchild)
+			printf("left child: %d ", root->lchild->key);
+		if(root->rchild)
+			printf("right child: %d ", root->rchild->key);
+		printf("\n");
 		InOrder(root->rchild);
 	}
 }
