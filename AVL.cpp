@@ -4,6 +4,7 @@
 
 #include "AVL.h"
 #include<iostream>
+#include<stdio.h>
 
 AVL* New_Node(KEY_TYPE key, AVL* lchild, AVL* rchild, int height)
 {
