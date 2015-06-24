@@ -197,6 +197,18 @@ void InOrder(AVL* root)
 	}
 }
 
+
+void PreOrder(AVL* root)
+{
+    if (root == NULL)
+        return;
+
+    std::cout<<root->key<<"  ";
+    PreOrder (root->lchild);
+    PreOrder (root->rchild);
+}
+
+
 void Display(AVL* ptr, int level)
 {
     int i;
