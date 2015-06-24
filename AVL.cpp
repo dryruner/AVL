@@ -196,3 +196,17 @@ void InOrder(AVL* root)
 		InOrder(root->rchild);
 	}
 }
+
+void Display(AVL* ptr, int level)
+{
+    int i;
+    if (ptr!=NULL)
+    {
+        Display(ptr->rchild, level + 1);
+        printf("\n");
+        for (i = 0; i < level; i++)
+            std::cout<<"        ";
+        std::cout<<ptr->key;
+        Display(ptr->lchild, level + 1);
+    }
+}

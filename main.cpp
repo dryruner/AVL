@@ -14,8 +14,7 @@ int main(int argc, char* argv[])
 		root = Insert(root, vector[i]);
 	
 	printf("\nInOrder: \n");
-	InOrder(root);
-
+        Display(root, root->height);
 	int input;
 	printf("\nplease input the value you want to delete: ");
 	scanf("%d",&input);
@@ -24,7 +23,7 @@ int main(int argc, char* argv[])
 	{
 		root = Delete(root, input);
 		printf("\nAfter delete %u:\n",input);
-		InOrder(root);
+		Display(root, root->height);
 		printf("\nplease input another value you want to delete: ");
 		scanf("%u",&input);
 	}

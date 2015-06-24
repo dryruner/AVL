@@ -30,6 +30,5 @@ AVL* RL_Rotate(AVL* k3);
 AVL* Insert(AVL* root, KEY_TYPE key);
 AVL* Delete(AVL* root, KEY_TYPE key);
 void InOrder(AVL* root);
-
-
+void Display(AVL*, int);
 #endif
