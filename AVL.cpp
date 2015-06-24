@@ -150,13 +150,13 @@ AVL* Delete(AVL* root, KEY_TYPE key)
 		}
 		else
 		{
-			AVL* temp = root->rchild;
-			while(temp->lchild)
-				temp = temp->lchild;
+			AVL* temp = root->lchild;
+			while(temp->rchild)
+				temp = temp->rchild;
 			/* replace the value */
 			root->key = temp->key;
 			/* Delete the node (successor node) that should be really deleted */
-			root->rchild = Delete(root->rchild, temp->key);
+			root->lchild = Delete(root->lchild, temp->key);
 		}
 	}
 	else if(key < root->key)

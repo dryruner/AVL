@@ -13,7 +13,6 @@ int main(int argc, char* argv[])
 	for(int i = 0; i< length;i++)
 		root = Insert(root, vector[i]);
 	
-	printf("\nInOrder: \n");
         Display(root, root->height);
 	int input;
 	printf("\nplease input the value you want to delete: ");
