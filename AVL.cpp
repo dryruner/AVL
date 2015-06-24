@@ -184,17 +184,11 @@ AVL* Delete(AVL* root, KEY_TYPE key)
 
 void InOrder(AVL* root)
 {
-	if(root)
-	{
-		InOrder(root->lchild);
-		printf("key: %d height: %d ", root->key, root->height);
-		if(root->lchild)
-			printf("left child: %d ", root->lchild->key);
-		if(root->rchild)
-			printf("right child: %d ", root->rchild->key);
-		printf("\n");
-		InOrder(root->rchild);
-	}
+    if (root == NULL)
+        return;
+    InOrder (root->lchild);
+    std::cout<<root->key<<"  ";
+    InOrder (root->rchild);
 }
 
 
@@ -202,12 +196,19 @@ void PreOrder(AVL* root)
 {
     if (root == NULL)
         return;
-
     std::cout<<root->key<<"  ";
     PreOrder (root->lchild);
     PreOrder (root->rchild);
 }
 
+void PostOrder(AVL* root)
+{
+    if (root == NULL)
+        return;
+    PostOrder (root->lchild);
+    PostOrder (root->rchild);
+    std::cout<< root->key <<"  ";
+}
 
 void Display(AVL* ptr, int level)
 {

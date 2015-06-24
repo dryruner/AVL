@@ -31,5 +31,6 @@ AVL* Insert(AVL* root, KEY_TYPE key);
 AVL* Delete(AVL* root, KEY_TYPE key);
 void InOrder(AVL* root);
 void PreOrder(AVL* root);
+void PostOrder(AVL* root);
 void Display(AVL*, int);
 #endif
