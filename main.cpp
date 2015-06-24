@@ -36,7 +36,7 @@ void menu(AVL* root){
                 continue;
             }
             cout<<"AVL Tree:"<<endl;
-            Display(root, root->height);
+            Display(root, 0);
             break;
         case 3:
             cout<<"InOrder:"<<endl;
