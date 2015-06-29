@@ -13,14 +13,14 @@ void menu(AVL* root){
         cout<<"---------------------"<<endl;
         cout<<"AVL Tree Implementation"<<endl;
         cout<<"---------------------"<<endl;
-        cout<<"1.Insert Element into the tree"<<endl;
-        cout<<"2.Display AVL Tree"<<endl;
-        cout<<"3.InOrder"<<endl;
-        cout<<"4.PreOrder"<<endl;
-        cout<<"5.PostOrder"<<endl;
-        cout<<"6.Delete Item from tree"<<endl;
-        cout<<"7.Exit"<<endl;
-        cout<<"Enter your Choice: ";
+        cout<<"\t1.Insert Element into the tree"<<endl;
+        cout<<"\t2.Display AVL Tree"<<endl;
+        cout<<"\t3.InOrder"<<endl;
+        cout<<"\t4.PreOrder"<<endl;
+        cout<<"\t5.PostOrder"<<endl;
+        cout<<"\t6.Delete Item from tree"<<endl;
+        cout<<"\t7.Exit"<<endl;
+        cout<<"\tEnter your Choice: ";
         cin>>choice;
         switch(choice)
         {
