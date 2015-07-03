@@ -13,7 +13,7 @@ AVL implementation in C/C++
 
 <h1>To execute:</h1>
 <p>
-Just use your favourite c++ compiler. In this case we're using <b>g++</b>.
-	`g++ main.cpp AVL.h AVL.cpp`
-	`./a.out`
+Just use your favourite c++ compiler. In this case we're using <b>g++</b>. <br/>
+	<code>g++ main.cpp AVL.h AVL.cpp</code><br/>
+	<code>./a.out</code>
 </p>
