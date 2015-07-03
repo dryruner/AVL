@@ -12,8 +12,10 @@ typedef struct AVL{
 }AVL;
 
 class AVLTree{
-public:
+private:
     static void AVLmenu(AVL* root);
+public:
+    static void AVLmenu();
 	static AVL* New_Node(KEY_TYPE key, AVL* lchild, AVL* rchild, int height = 0);
 	static inline int getHeight(AVL* node);
 	static inline int max(int a, int b);

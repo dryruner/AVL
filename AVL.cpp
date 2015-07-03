@@ -223,8 +223,17 @@ void AVLTree::Display(AVL* ptr, int level) {
         Display(ptr->lchild, level + 1);
     }
 }
+/* Initialization of the AVL Tree to pass to the menu*/
+void AVLTree::AVLmenu(){
+        AVL* root = NULL;
+	int vector[] = {15,6,18,3,7,17,20,2,4,13,9};
+	const int length = sizeof(vector)/sizeof(int);
+	for(int i = 0; i< length;i++)
+		root = AVLTree::Insert(root, vector[i]);
+        AVLmenu(root);
+}
 
-
+/* The AVL Tree menu per se */
 void AVLTree::AVLmenu(AVL* root){
     using namespace std;
     int choice, item;
