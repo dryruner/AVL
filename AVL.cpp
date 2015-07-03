@@ -24,6 +24,7 @@ inline int max(int a, int b) {
 }
 
 /* RR(Y rotates to the right):
+
         k2                   k1
        /  \                 /  \
       k1   Z     ==>       X   k2
@@ -44,6 +45,7 @@ AVL* RR_Rotate(AVL* k2) {
 }
 
 /* LL(Y rotates to the left):
+
         k2                       k1
        /  \                     /  \
       X    k1         ==>      k2   Z
@@ -80,6 +82,7 @@ AVL* LR_Rotate(AVL* k3) {
 }
 
 /* RL(D rotates to the right, then C rotates to the left):
+
        k3                         k3                          k2
       /  \                       /  \                        /  \
      A    k1                    A    k2                     k3   k1 
@@ -119,6 +122,7 @@ AVL* Insert(AVL* root, KEY_TYPE key) {
     }
     return root;
 }
+
 
 /* return which the root pointer(at an outer/higher level) should pointer to,
    cause the root_node of AVL tree may change frequently during delete/insert,
@@ -219,3 +223,5 @@ void Display(AVL* ptr, int level) {
         Display(ptr->lchild, level + 1);
     }
 }
+
+
