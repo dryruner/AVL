@@ -6,7 +6,7 @@
 #include<iostream>
 #include<stdio.h>
 
-AVL* New_Node(KEY_TYPE key, AVL* lchild, AVL* rchild, int height) {
+AVL* AVLTree::New_Node(KEY_TYPE key, AVL* lchild, AVL* rchild, int height) {
     AVL* p_avl = new AVL;
     p_avl->key = key;
     p_avl->lchild = lchild;
@@ -15,11 +15,11 @@ AVL* New_Node(KEY_TYPE key, AVL* lchild, AVL* rchild, int height) {
     return p_avl;
 }
 
-inline int getHeight(AVL* node) {
+inline int AVLTree::getHeight(AVL* node) {
     return (node == NULL) ? -1 : node->height;
 }
 
-inline int max(int a, int b) {
+inline int AVLTree::max(int a, int b) {
     return a > b ? a : b;
 }
 
@@ -35,7 +35,7 @@ inline int max(int a, int b) {
 /*
  Return which the root pointer(at a higher level) should point to
  */
-AVL* RR_Rotate(AVL* k2) {
+AVL* AVLTree::RR_Rotate(AVL* k2) {
     AVL* k1 = k2->lchild;
     k2->lchild = k1->rchild;
     k1->rchild = k2;
@@ -52,7 +52,7 @@ AVL* RR_Rotate(AVL* k2) {
           /  \                /  \
          Y    Z              X    Y
  */
-AVL* LL_Rotate(AVL* k2) {
+AVL* AVLTree::LL_Rotate(AVL* k2) {
     AVL* k1 = k2->rchild;
     k2->rchild = k1->lchild;
     k1->lchild = k2;
@@ -76,7 +76,7 @@ AVL* LL_Rotate(AVL* k2) {
 /*
  Return which the root pointer should point to
  */
-AVL* LR_Rotate(AVL* k3) {
+AVL* AVLTree::LR_Rotate(AVL* k3) {
     k3->lchild = LL_Rotate(k3->lchild);
     return RR_Rotate(k3);
 }
@@ -91,7 +91,7 @@ AVL* LR_Rotate(AVL* k3) {
        /  \                            /  \
       C    D                          D    B 
  */
-AVL* RL_Rotate(AVL* k3) {
+AVL* AVLTree::RL_Rotate(AVL* k3) {
     k3->rchild = RR_Rotate(k3->rchild);
     return LL_Rotate(k3);
 }
@@ -100,7 +100,7 @@ AVL* RL_Rotate(AVL* k3) {
    the root_node of AVL tree may change frequently during delete/insert,
    so the Root pointer should point to the REAL root node.
  */
-AVL* Insert(AVL* root, KEY_TYPE key) {
+AVL* AVLTree::Insert(AVL* root, KEY_TYPE key) {
     if (root == NULL)
         return (root = New_Node(key, NULL, NULL));
     else if (key < root->key)
@@ -128,7 +128,7 @@ AVL* Insert(AVL* root, KEY_TYPE key) {
    cause the root_node of AVL tree may change frequently during delete/insert,
    so the Root pointer should point to the REAL root node.
  */
-AVL* Delete(AVL* root, KEY_TYPE key) {
+AVL* AVLTree::Delete(AVL* root, KEY_TYPE key) {
     if (!root)
         return NULL;
     if (key == root->key) {
@@ -188,7 +188,7 @@ AVL* Delete(AVL* root, KEY_TYPE key) {
     return root;
 }
 
-void InOrder(AVL* root) {
+void AVLTree::InOrder(AVL* root) {
     if (root == NULL)
         return;
     InOrder(root->lchild);
@@ -196,7 +196,7 @@ void InOrder(AVL* root) {
     InOrder(root->rchild);
 }
 
-void PreOrder(AVL* root) {
+void AVLTree::PreOrder(AVL* root) {
     if (root == NULL)
         return;
     std::cout << root->key << "  ";
@@ -204,7 +204,7 @@ void PreOrder(AVL* root) {
     PreOrder(root->rchild);
 }
 
-void PostOrder(AVL* root) {
+void AVLTree::PostOrder(AVL* root) {
     if (root == NULL)
         return;
     PostOrder(root->lchild);
@@ -212,10 +212,10 @@ void PostOrder(AVL* root) {
     std::cout << root->key << "  ";
 }
 
-void Display(AVL* ptr, int level) {
+void AVLTree::Display(AVL* ptr, int level) {
     int i;
     if (ptr != NULL) {
-        Display(ptr->rchild, level + 1);
+        AVLTree::Display(ptr->rchild, level + 1);
         printf("\n");
         for (i = 0; i < level; i++)
             std::cout << "        ";
@@ -225,3 +225,66 @@ void Display(AVL* ptr, int level) {
 }
 
 
+void AVLTree::AVLmenu(AVL* root){
+    using namespace std;
+    int choice, item;
+    while (1)
+    {
+        //if (system("CLS")) system("clear");
+        cout << endl;
+        cout<<"---------------------"<<endl;
+        cout<<"AVL Tree Implementation"<<endl;
+        cout<<"---------------------"<<endl;
+        cout<<"\t1.Insert Element into the tree"<<endl;
+        cout<<"\t2.Display AVL Tree"<<endl;
+        cout<<"\t3.InOrder"<<endl;
+        cout<<"\t4.PreOrder"<<endl;
+        cout<<"\t5.PostOrder"<<endl;
+        cout<<"\t6.Delete Item from tree"<<endl;
+        cout<<"\t7.Exit"<<endl;
+        cout<<"\tEnter your Choice: ";
+        cin>>choice;
+        switch(choice)
+        {
+        case 1:
+            cout<<"Enter value to be inserted: ";
+            cin>>item;
+            root = AVLTree::Insert(root, item);
+            break;
+        case 2:
+            if (root == NULL)
+            {
+                cout<<"Tree is Empty"<<endl;
+                continue;
+            }
+            cout<<"AVL Tree:"<<endl;
+            AVLTree::Display(root, 0);
+            break;
+        case 3:
+            cout<<"InOrder:"<<endl;
+            AVLTree::InOrder(root);
+            cout<<endl;
+            break;
+        case 4:
+            cout<<"PreOrder:"<<endl;
+            AVLTree::PreOrder(root);
+            cout<<endl;
+            break;
+        case 5:
+            cout<<"PostOrder:"<<endl;
+            AVLTree::PostOrder(root);    
+            cout<<endl;
+            break;
+        case 6:
+            cout<<"Enter the value to be deleted: ";
+            cin>>item;
+            root = AVLTree::Delete(root, item);
+            break;
+        case 7:
+            return;    
+            break;
+        default:
+            cout<<"Invalid Option"<<endl;
+        }
+    }
+}

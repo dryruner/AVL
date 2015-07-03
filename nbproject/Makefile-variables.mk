@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux-x86
-CND_ARTIFACT_NAME_Debug=arbolavl
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/arbolavl
+CND_ARTIFACT_NAME_Debug=avl
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/avl
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=arbolavl.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/arbolavl.tar
+CND_PACKAGE_NAME_Debug=avl.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/avl.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=arbolavl
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/arbolavl
+CND_ARTIFACT_NAME_Release=avl
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/avl
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=arbolavl.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/arbolavl.tar
+CND_PACKAGE_NAME_Release=avl.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/avl.tar
 #
 # include compiler specific variables
 #
