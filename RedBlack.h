@@ -29,11 +29,12 @@ private:
     void Right_Rotate(node* k2);
     void Left_Rotate(node* k2);
     color node_color(node* n);
+    void replace_node(node* oldno, node* newno);
 
     //verify rules are not broken
     void verify_properties();
     void verify_property_1(node* root);
-    void verify_property_2(node* root);
+    void verify_property_2();
     void verify_property_4(node* root);
     void verify_property_5(node* root);
     void verify_property_5_rec(node* n, int black_count, int* path_black_count);

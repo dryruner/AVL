@@ -34,16 +34,46 @@ node* RedBlack::Uncle(node* n){
         return grandparent->left;
 }
 
+void RedBlack::replace_node(node* oldno, node* newno){
+    if (oldno->parent == NULL)
+    {
+        this->root = newno;
+    }
+    else
+    {
+        if (oldno == oldno->parent->left)
+            oldno->parent->left = newno;
+        else
+            oldno->parent->right = newno;
+    }
+    if (newno != NULL)
+    {
+        newno->parent = oldno->parent;
+    }
+}
+
 void RedBlack::Right_Rotate(node* k2){
-    node* k1 = k2->left;
-    k2->left = k1->right;
-    k1->right = k2;
+    node* L = k2->left;
+    replace_node(k2, L);
+    k2->left = L->right;
+    if (L->right != NULL)
+    {
+        L->right->parent = k2;
+    }
+    L->right = k2;
+    k2->parent = L;
 }
 
 void RedBlack::Left_Rotate(node* k2){
-    node* k1 = k2->right;
-    k2->right = k1->left;
-    k1->left = k2;
+    node* r = k2->right;
+    replace_node(k2, r);
+    k2->right = r->left;
+    if (r->left != NULL)
+    {
+        r->left->parent = k2;
+    }
+    r->left = k2;
+    k2->parent = r;
 }
 
 /* If it's NULL then it means it's a leaf, so it's color is BLACK */
@@ -54,7 +84,7 @@ color RedBlack::node_color(node* n){
 //Verify properties [rules]
 void RedBlack::verify_properties(){
     verify_property_1(this->root);
-    verify_property_2(this->root);
+    verify_property_2();
     verify_property_4(this->root);
     verify_property_5(this->root);
 }
@@ -67,8 +97,8 @@ void RedBlack::verify_property_1(node* root){
     verify_property_1(root->right);
 }
 
-void RedBlack::verify_property_2(node* root){
-    assert (node_color(root) == BLACK);
+void RedBlack::verify_property_2(){
+    assert (node_color(this->root) == BLACK);
 }
 
 void RedBlack::verify_property_4(node* root){
@@ -100,8 +130,9 @@ void RedBlack::verify_property_5_rec(node* n, int black_count, int* path_black_c
         {
             *path_black_count = black_count;
         }
-        else
+        else if(black_count != *path_black_count)
         {
+            this->Display(root, 0);
             assert (black_count == *path_black_count);
         }
         return;
