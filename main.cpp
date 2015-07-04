@@ -25,10 +25,10 @@ int main(int argc, char* argv[])
 			AVLTree::AVLmenu();
 			break;
 		case 2:
-                        
-
+                    RedBlack::RBMenu();
+                    break;
 		case 3:
-
+                    break;
 		
 
 		

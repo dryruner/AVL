@@ -46,7 +46,7 @@ private:
     void insert_case5(node* n);
     
 public:
-    void AVLMenu();
+    static void RBMenu();
     void Insert(int _key);
     void Display(node* ptr, int level);
 

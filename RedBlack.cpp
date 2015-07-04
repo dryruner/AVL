@@ -228,6 +228,67 @@ void RedBlack::Display(node* ptr, int level) {
     }
 }
 
-void RedBlack::AVLMenu(){
-
+void RedBlack::RBMenu(){
+    using namespace std;
+    RedBlack* tree = new RedBlack();
+    
+    int choice, item;
+    while (1)
+    {
+        cout << endl;
+        cout<<"---------------------"<<endl;
+        cout<<"RB Tree Implementation"<<endl;
+        cout<<"---------------------"<<endl;
+        cout<<"\t1.Insert Element into the tree"<<endl;
+        cout<<"\t2.Display AVL Tree"<<endl;
+        cout<<"\t3.InOrder"<<endl;
+        cout<<"\t4.PreOrder"<<endl;
+        cout<<"\t5.PostOrder"<<endl;
+        cout<<"\t6.Delete Item from tree"<<endl;
+        cout<<"\t7.Exit"<<endl;
+        cout<<"\tEnter your Choice: ";
+        cin>>choice;
+        switch(choice)
+        {
+        case 1:
+            cout<<"Enter value to be inserted: ";
+            cin>>item;
+            //
+            break;
+        case 2:
+            if (tree->root == NULL)
+            {
+                cout<<"Tree is Empty"<<endl;
+                continue;
+            }
+            cout<<"RB Tree:"<<endl;
+            //
+            break;
+        case 3:
+            cout<<"InOrder:"<<endl;
+            //
+            cout<<endl;
+            break;
+        case 4:
+            cout<<"PreOrder:"<<endl;
+            //
+            cout<<endl;
+            break;
+        case 5:
+            cout<<"PostOrder:"<<endl;
+            //    
+            cout<<endl;
+            break;
+        case 6:
+            cout<<"Enter the value to be deleted: ";
+            cin>>item;
+            //
+            break;
+        case 7:
+            return;    
+            break;
+        default:
+            cout<<"Invalid Option"<<endl;
+        }
+    }
 }
