@@ -1,5 +1,6 @@
 #include "RedBlack.h"
 #include <stdio.h>
+#include <iostream>
 #include <assert.h>
 
 
@@ -212,7 +213,21 @@ void RedBlack::insert_case5(node* n){
         Left_Rotate(Grandparent(n));
     }
 }
+void RedBlack::Display(node* ptr, int level) {
+    int i;
+    if (ptr != NULL) {
+        RedBlack::Display(ptr->right, level + 1);
+        printf("\n");
+        for (i = 0; i < level; i++)
+            std::cout << "        ";
+        if(node_color(ptr) == BLACK)
+            std::cout << "<" << ptr->key << "> ---- ";
+        else
+            std::cout << ptr->key << "------ ";
+        RedBlack::Display(ptr->left, level + 1);
+    }
+}
 
-void RedBlack::Delete(int _key){
-    
+void RedBlack::AVLMenu(){
+
 }
