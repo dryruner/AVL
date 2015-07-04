@@ -272,11 +272,8 @@ void RedBlack::RBMenu(){
         cout<<"---------------------"<<endl;
         cout<<"\t1.Insert Element into the tree"<<endl;
         cout<<"\t2.Display AVL Tree"<<endl;
-        cout<<"\t3.InOrder"<<endl;
-        cout<<"\t4.PreOrder"<<endl;
-        cout<<"\t5.PostOrder"<<endl;
-        cout<<"\t6.Delete Item from tree"<<endl;
-        cout<<"\t7.Exit"<<endl;
+        cout<<"\t3.Delete Item from tree"<<endl;
+        cout<<"\t4.Exit"<<endl;
         cout<<"\tEnter your Choice: ";
         cin>>choice;
         switch(choice)
@@ -284,7 +281,7 @@ void RedBlack::RBMenu(){
         case 1:
             cout<<"Enter value to be inserted: ";
             cin>>item;
-            //
+            tree->RedBlack::Insert(item);
             break;
         case 2:
             if (tree->root == NULL)
@@ -293,29 +290,14 @@ void RedBlack::RBMenu(){
                 continue;
             }
             cout<<"RB Tree:"<<endl;
-            //
+            tree->RedBlack::Display(tree->root,0);
             break;
         case 3:
-            cout<<"InOrder:"<<endl;
-            //
-            cout<<endl;
-            break;
-        case 4:
-            cout<<"PreOrder:"<<endl;
-            //
-            cout<<endl;
-            break;
-        case 5:
-            cout<<"PostOrder:"<<endl;
-            //    
-            cout<<endl;
-            break;
-        case 6:
             cout<<"Enter the value to be deleted: ";
             cin>>item;
             //
             break;
-        case 7:
+        case 4:
             return;    
             break;
         default:
