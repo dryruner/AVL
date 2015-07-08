@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <assert.h>
+#include <stdlib.h>
 
 /* Returns a pointer to the node which is the grandparent of n */
 node* RedBlack::Grandparent(node* n){
@@ -418,6 +419,126 @@ void RedBlack::Display(node* ptr, int level) {
     }
 }
 
+node* RedBlack::lookup_node(int _key){
+    node* n = this->root;
+    while (n != NULL)
+    {
+        if (_key == n->key)
+        {
+            return n;
+        }
+        else if (_key < n->key)
+        {
+            n = n->left;
+        }
+        else
+        {
+            assert(_key > n->key);
+            n = n->right;
+        }
+    }
+    return n;
+}
+
+void RedBlack::Delete(int _key){
+    node* n = lookup_node(_key);
+    node* child;
+    if (n == NULL)
+        return;
+    if (n->left != NULL && n->right != NULL)
+    {
+        node* pred = n->left;
+        while(pred->right != NULL)
+            pred = pred->right;
+        
+        n->key   = pred->key;
+        n = pred;
+    }
+    assert(n->left == NULL || n->right == NULL);
+    child = n->right == NULL ? n->left  : n->right;
+    
+    if (node_color(n) == BLACK)
+    {
+        n->color = node_color(child);
+        delete_case1(n);
+    }
+    replace_node(n, child);
+    free(n);
+    verify_properties();
+}
+
+void RedBlack::delete_case1(node* n){
+    if (n->parent == NULL)
+        return;
+    else
+        delete_case2(n);
+}
+void RedBlack::delete_case2(node* n){
+    if (node_color(Sibling(n)) == RED)
+    {
+        n->parent->color = RED;
+        Sibling(n)->color = BLACK;
+        if (n == n->parent->left)
+            Left_Rotate(n->parent);
+        else
+            Right_Rotate(n->parent);
+    }
+    delete_case3(n);
+}
+void RedBlack::delete_case3(node* n){
+        if (node_color(n->parent) == BLACK && node_color(Sibling(n)) == BLACK &&
+        node_color(Sibling(n)->left) == BLACK && node_color(Sibling(n)->right) == BLACK)
+    {
+        Sibling(n)->color = RED;
+        delete_case1(n->parent);
+    }
+    else
+        delete_case4(n);
+}
+void RedBlack::delete_case4(node* n){
+    if (node_color(n->parent) == RED && node_color(Sibling(n)) == BLACK &&
+        node_color(Sibling(n)->left) == BLACK && node_color(Sibling(n)->right) == BLACK)
+    {
+        Sibling(n)->color = RED;
+        n->parent->color = BLACK;
+    }
+    else
+        delete_case5(n);
+}
+void RedBlack::delete_case5(node* n){
+    if (n == n->parent->left && node_color(Sibling(n)) == BLACK &&
+        node_color(Sibling(n)->left) == RED && node_color(Sibling(n)->right) == BLACK)
+    {
+        Sibling(n)->color = RED;
+        Sibling(n)->left->color = BLACK;
+        Right_Rotate(Sibling(n));
+    }
+    else if (n == n->parent->right && node_color(Sibling(n)) == BLACK &&
+             node_color(Sibling(n)->right) == RED && node_color(Sibling(n)->left) == BLACK)
+    {
+        Sibling(n)->color = RED;
+        Sibling(n)->right->color = BLACK;
+        Left_Rotate(Sibling(n));
+    }
+    delete_case6(n);
+}
+void RedBlack::delete_case6(node* n){
+    Sibling(n)->color = node_color(n->parent);
+    n->parent->color = BLACK;
+    if (n == n->parent->left)
+    {
+        assert (node_color(Sibling(n)->right) == RED);
+        Sibling(n)->right->color = BLACK;
+        Left_Rotate(n->parent);
+    }
+    else
+    {
+        assert (node_color(Sibling(n)->left) == RED);
+        Sibling(n)->left->color = BLACK;
+        Right_Rotate(n->parent);
+    }
+}
+
 void RedBlack::RBMenu(){
     using namespace std;
     RedBlack* tree = new RedBlack();
@@ -454,7 +575,7 @@ void RedBlack::RBMenu(){
         case 3:
             cout<<"Enter the value to be deleted: ";
             cin>>item;
-            //
+            tree->Delete(item);
             break;
         case 4:
             return;    

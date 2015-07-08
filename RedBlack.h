@@ -46,11 +46,22 @@ private:
     void insert_case4(node* n);
     void insert_case5(node* n);
     
+    //delete steps
+    void delete_case1(node* n);
+    void delete_case2(node* n);
+    void delete_case3(node* n);
+    void delete_case4(node* n);
+    void delete_case5(node* n);
+    void delete_case6(node* n);
+    
+    node* lookup_node(int _key);
+    
 public:
     static void RBMenu();
     void Insert(int _key);
     void Display(node* ptr, int level);
-
+    void Delete(int _key);
+    
 };
 
 #endif	/* REDBLACK_H */
