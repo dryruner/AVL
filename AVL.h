@@ -3,7 +3,7 @@
 
 typedef int KEY_TYPE;
 
-/* no parent pointer */
+/* No hay punter padre */
 typedef struct AVL{
 	KEY_TYPE key;
 	int height;
@@ -20,16 +20,16 @@ public:
 	static inline int getHeight(AVL* node);
 	static inline int max(int a, int b);
 	/*
-	 Return which the root pointer(at a higher level) should point to
+	Retornar a donde deberia apuntar el nodo raiz
 	 */
 	static AVL* RR_Rotate(AVL* k2);
 	static AVL* LL_Rotate(AVL* k2);
 	/*
-	 Return which the root pointer should point to
+	Retornar a donde deberia apuntar el nodo raiz
 	 */
 	static AVL* LR_Rotate(AVL* k3);
 
-	/* RL(D rotates to the right, then C rotates to the left):*/
+	/* DI(D rota a la derecha, C rota a la izquierda):*/
 	static AVL* RL_Rotate(AVL* k3);
 
 

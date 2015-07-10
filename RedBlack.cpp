@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-/* Returns a pointer to the node which is the grandparent of n */
+/* Retorna un puntero al nodo que es abuelo de n */
 node* RedBlack::Grandparent(node* n){
     if(n->parent != NULL)
         return n->parent->parent;
@@ -12,7 +12,7 @@ node* RedBlack::Grandparent(node* n){
         return NULL;
 }
 
-/* Returns a pointer to n's brother. If n has no brother then returns NULL */
+/* Retorna un puntero al hermano de n. Si no tiene, retorna NULL */
 node* RedBlack::Sibling(node* n){
     node* parent = n->parent;
     if(parent == NULL) return NULL;
@@ -24,8 +24,7 @@ node* RedBlack::Sibling(node* n){
         return parent->left;
 }
 
-/* Returns a pointer to n's uncle (n's parent's brother). If n has no uncle
- * then it returns NULL */
+/* Retorna un puntero al tio de n. Si no tiene, retorna NULL */
 node* RedBlack::Uncle(node* n){
     node* parent = n->parent;
     node* grandparent = Grandparent(n);
@@ -39,19 +38,19 @@ node* RedBlack::Uncle(node* n){
 }
 
 /*
- * This method is used to aid the rotations of the nodes. It replaces 
- * the old node 'oldno' with the new node 'newno'.
+ * Este metodo ayuda en la rotacion de nodos. Reemplaza el nodo viejo 'oldno'
+ * con el nuevo nodo 'newno'
  */
 void RedBlack::replace_node(node* oldno, node* newno){
-    //if oldno is root    
+    //si oldno es raiz    
     if (oldno->parent == NULL)
     {
         this->root = newno;
     }
     else
     {   
-        //if oldno is a left child then newno will be set as oldno's parent left
-        //child, or right in case oldno was right child.
+        /* si oldno es un hijo izquierdo, entonces newno sera setteado como el hijo izquierdo
+         del padre de oldno, o derecho en caso de que oldno fuese hijo derecho */
         if (oldno == oldno->parent->left)
             oldno->parent->left = newno;
         else
@@ -63,14 +62,14 @@ void RedBlack::replace_node(node* oldno, node* newno){
     }
 }
 
-/*  Rotate to the right
+/*  Rotacion a la derecha
         k2                   k1
        /  \                 /  \
       k1   Z     ==>       X   k2
      / \                      /  \
     X   Y                    Y    Z
   
- Changes the tree structure.
+ Cambia la estructura
  */
 void RedBlack::Right_Rotate(node* k2){
     node* k1 = k2->left;
@@ -85,13 +84,13 @@ void RedBlack::Right_Rotate(node* k2){
 }
 
 
-/* Rotate to the left
+/* Rotacion a la izquierda
         k2                       k1
        /  \                     /  \
       X    k1         ==>      k2   Z
           /  \                /  \
          Y    Z              X    Y
- Changes the tree structure
+ Cambia la estructura
  */
 void RedBlack::Left_Rotate(node* k2){
     node* k1 = k2->right;
@@ -105,27 +104,24 @@ void RedBlack::Left_Rotate(node* k2){
     k2->parent = k1;
 }
 
-/* If it's NULL then it means it's a leaf, so it's color is BLACK */
+// Si es NULL es hoja, asi que el color va a ser negro
 color RedBlack::node_color(node* n){
     return n == NULL ? BLACK : n->color;
 }
 
-/*Verify properties [rules]
- *  See RedBlack.h for a list of all the properties
+/*
+ * Verifica las propiedades[reglas], ver .h para ver todas
  */
 void RedBlack::verify_properties(){
     verify_property_1(this->root);
     verify_property_2();
-    /* propery 3 is not verified since it states that
-        'All leaves (NIL) are black'. */
+    //property 3 no se verifica ya que declara que todas las hojas son negras
     verify_property_4(this->root);
     verify_property_5(this->root);
 }
 
 /*
- * Verifies (for every node in the tree) that property 1 is not broken.
- * Property 1:
- *      "A node is either red or black"
+ * Propiedad 1: Un nodo es rojo o negro
  */
 void RedBlack::verify_property_1(node* root){
     assert (node_color(root) == RED || node_color(root) == BLACK);
@@ -136,19 +132,14 @@ void RedBlack::verify_property_1(node* root){
 }
 
 /*
- * Verifies that property 2 is not broken.
- * Property 2:
- *      "The root is black"
+ * Propiedad 2: La raiz es negra
  */
 void RedBlack::verify_property_2(){
     assert (node_color(this->root) == BLACK);
 }
 
 /*
- * Verifies (for every node in the tree) that property 4 is not broken.
- * Property 4:
- *      "Every red node must have two black child nodes, 
- *      and therefore it must have a black parent."
+ * Propiedad 3: Todo nodo rojo debe tener dos nodos hijos negros, y por ende, un padre negro
  */
 void RedBlack::verify_property_4(node* root){
     if (node_color(root) == RED)
@@ -164,10 +155,8 @@ void RedBlack::verify_property_4(node* root){
 }
 
 /*
- * Verifies (for every node in the tree) that property 5 is not broken.
- * Property 5:
- *      "Every path from a given node to any of its descendant NIL 
- *       nodes contains the same number of black nodes."
+ * Propiedad 5: Todo camino de un nodo dado a cualquiera de sus descendientes nodo-NULL
+ * contiene la misma cantidad de nodos negros
  */
 void RedBlack::verify_property_5(node* root){
     int black_count_path = -1;
@@ -175,41 +164,35 @@ void RedBlack::verify_property_5(node* root){
 }
 
 /*
- * A helper function which does the actual verification of property 5. It's a 
- * recursive method, all it's running 'instances' share the same value of 'path_black_count'
- * since it's a pointer.
- *    Parameters
- *      node* n: Is the node that we are testing in a given recursive call. 
- *      int black_count: It's the number of black nodes in a given path.
- *      int* path_black_count: Is a pointer that specifies which value of 'black_count'
- *                             should every path have. It's initial value is -1 and
- *                             the first recursive function to finish sets it's value.
+ * Una funcion auxiliar que hace la verificacion de la propiedad 5. Es un metodo recursivo, todas sus 'instancias'
+ * comparten el mismo valor 'path_black_count' ya que es un puntero
+ * Parametros:
+ * node* n: Nodo que testeamos en una invocacion recursiva
+ * int black_count: Nodos negros en un camino dado
+ * int* path_black_count: Es un puntero que especifica el valor de 'black_count' que todo camino deberia tener.
+ *                        Es un valor inicial -1 y la primera funcion recursiva establece su valor.
  */
 void RedBlack::verify_property_5_rec(node* n, int black_count, int* path_black_count){
     if (node_color(n) == BLACK)
     {
-        //if n is color black then we add 1 to the black count of the path.
+        //si n es negro, +1 al contador negro del camino
         black_count++;
     }
-    //if n is NULL (which also means it's a leaf)
+    //si n es NULL (= una hoja)
     if (n == NULL)
     {
-        //if 'path_black_count' has value -1 it means that no other recursive path
-        //has yet finished it's execution and that the actual recusive path is 
-        //the first to reach this point.
+        /* si 'path_black_count* tiene un valor -1 = no hay ningun otro camino recursivo
+         que haya terminado su ejecucion y que el camino recursivo actual es el primero en llegar a este punto */
         if (*path_black_count == -1)
         {
-            //since our black_count is the same as every other recursive path ought to
-            //get to then we set 
+            //ya que nuestro contador negro es el mismo que cualquier otro camino recursivo que queremos y setteamos
             *path_black_count = black_count;
         }
-        //If path_black_count is not -1 it means that another recursive path has 
-        //already specified a path_black_count. If our black_count is different,
-        //then it means that not every path has the same number of black nodes.
+        /* si path_black_count no es -1, quiere decir que otro camino recursivo ya especifico el path_black count.
+         Si el contador es diferente, quiere decir que no todos los caminos tienen el mismo numero de nodos negros*/
         else if(black_count != *path_black_count)
         {
-            //this will always stops the program, since the only way that this part
-            //gets to be executed is that 'black_count != *path_black_count'
+            /* esto siempre detendra el programa, ya que el unico modo en que esta parte sera ejectuada es si 'black_count != *path_black_count' */
             assert (black_count == *path_black_count);
         }
         return;
@@ -221,17 +204,15 @@ void RedBlack::verify_property_5_rec(node* n, int black_count, int* path_black_c
 
 
 /* 
- * Insertion is the same as in a normal binary tree. This is an iterative 
- * insertion method, however this same thing can also be done recursively 
- * (see AVL.cpp's Insert() for an example). At the end it calls 'insert_case1()'
- * which will start a chain of functions that will fix any problems created
- * because of the insertion, after that it will call 'verify_cases()' that will
- * check that every property of the tree has not been broken.
+ * Insercion es igual que en un arbol binario. Es un metodo iterativo. Al final llama
+ * a 'insert_case1()9, que ejecutara una cadena de funciones que arreglaran errores creados
+ * por la insercion. Despues llamara 'verify_cases()', que chequea que ninguna propiedad el arbol haya sido 
+ * rota
  */
 void RedBlack::Insert(int _key){
     
     rbtree_node* node_insert = new rbtree_node();
-    //new nodes are always inserted as RED nodes.
+    //nuevos nodos siempre son insertados como rojos
     node_insert->color = RED;
     node_insert->key = _key;
     if (this->root == NULL)
@@ -242,11 +223,10 @@ void RedBlack::Insert(int _key){
     {
         node* n = this->root;
         
-        //iterative insert
+        //insert iterativo
         while (1)
         {
-            // if the node already exists then we return since there can
-            //be no repeated values in a binary tree.
+            /* si el nodo ya existe entonces lo retornamos, ya que no pueden haber valores repetidos en el arbol*/
             if (n->key == node_insert->key)
             {
                 return;
@@ -284,8 +264,7 @@ void RedBlack::Insert(int _key){
 }
 
 /*
- * Checks if n is root, if it is then it's color will be changed to BLACK. If it's
- * not then it continues with 'insert_case2()'
+ * Verifica si n es raiz. Si lo es, entonces se convertira en negro. Si no, entonces continua con el 'insert_case2()'
  */
 void RedBlack::insert_case1(node* n){
     if (n->parent == NULL)
@@ -295,9 +274,8 @@ void RedBlack::insert_case1(node* n){
 }
 
 /*
- * We know that n is RED, so if n's parent is BLACK everything is in order 
- * and there is no sense in continuing with the 'checking chain'. If the parent
- * is not BLACK then continues with 'insert_case3()'
+ * Sabemos que n es rojo, si su padre es negro entonces todo esta bien y no tiene sentido continuar
+ * chequeando que las reglas esten bien. Si el padre NO es negro, entonces seguimos con 'insert_case3()'
  */
 void RedBlack::insert_case2(node* n){
     if (node_color(n->parent) == BLACK)
@@ -307,13 +285,11 @@ void RedBlack::insert_case2(node* n){
 }
 
 /*
- * We already know that n's parent is neither NULL nor BLACK, so now we check if 
- * n's uncle is RED, if it is we color both the UNCLE and the PARENT BLACK and we
- * also color the grandparent RED, at this point we know that from n's grandparent 
- * to n every property is consistent but we don't know if changing the grandparent's
- * color to red caused any problems so we start the 'checking chain' again but this 
- * time we are interested in checking n's grandparent. 
- * If n's uncle is not RED we go on to 'insert_case4()'
+ * Ya sabemos que el padre de n no es NULL o negro, entonces chequeamos si el tio es rojo. Si lo es,
+ * el tio y el padre seran negros y el abuelo rojo. En este punto sabemos que del abuelo de n a n toda propiedad
+ * es consistente, pero no sabemos si cambiando el color del abuelo causo probelmas, por lo que empezamos la cadena de 
+ * checks de reglas otra vez, pero sin chequear el abuelo de n.
+ * Si el tio de n no es rojo, seguimos con 'insert_case4()'
  */
 void RedBlack::insert_case3(node* n){
     if (node_color(Uncle(n)) == RED)
@@ -330,18 +306,17 @@ void RedBlack::insert_case3(node* n){
 }
 
 /*
- * At this point we know that:
- *      n is RED
- *      n's parent is not NULL, 
- *      n's parent is colored RED
- *      n's uncle is colored BLACK
- * So now we need to rotate the tree to make the properties consistent again. This
- * rotation consists in rotating n's parent once and n's grandparent once. 
- * In 'insert_case4()' n's parent is rotated and then (after the rotation)
- * n is set to point to it's parent and we go on to 'insert_case5()'
+ * En este punto sabemos que
+ * n es rojo
+ * padre de n no es NULL
+ * padre de n es rojo
+ * tio de n es negro
+ * Entonces necesitamos rotar el arbol para hacer las propiedades consistentes. Esta rotacion
+ * consiste en rotar el padre de n y el abuelo de n una vez. En 'insert_case4()' el padre de n es
+ * rotado y entonces n apunta al padre y seguimos con 'insert_case5()'
  */
 void RedBlack::insert_case4(node* n){
-    //if n is a right child and n's parent is a left child we rotate left
+    //si n es hijo derecho y el padre es izquierdo, rotamos a izquierda
     //       Gp(B)                     Gp(B)
     //      /                          /
     //  Pa(R)           ==>         n(R)
@@ -350,10 +325,10 @@ void RedBlack::insert_case4(node* n){
     if (n == n->parent->right && n->parent == Grandparent(n)->left)
     {
         Left_Rotate(n->parent);
-        n = n->left; //point to parent
+        n = n->left; //apuntar al padre
     }
     
-    //if n is a left child and n's parent is a right child we rotate right
+    //si n es izquierdo y el padre de n es un hijo derecho, rotamos a la derecha
     //       Gp(B)                     Gp(B)
     //            \                        \
     //            Pa(R)           ==>       n(R)
@@ -362,21 +337,20 @@ void RedBlack::insert_case4(node* n){
     else if (n == n->parent->left && n->parent == Grandparent(n)->right)
     {
         Right_Rotate(n->parent);
-        n = n->right; //point to parent 
+        n = n->right; //apuntar al padre
     }
     insert_case5(n);
 }
 
 /*
- * This method performs the second rotation, but this time it rotates n's grandparent.
- * But before rotating n's parent's color is set to BLACK and n's grandparent's color
- * is set to RED.
+ * Este metodo hace la segunda rotacion, pero esta vez rota el abuelo de n. 
+ * Antes de rotar el padre de n se pone negro y el del abuelo de n de rojo.
  */
 void RedBlack::insert_case5(node* n){
     n->parent->color = BLACK;
     Grandparent(n)->color = RED;
     
-    //if n is a left child and n's parent is a left child we rotate RIGHT
+    //si n es un hijo izquierdo y el padre es un hijo izquierdo, rotar a la derecha
     //       Gp(R)                
     //      /                       Pa(B)  
     //    Pa(B)           ==>      /    \
@@ -387,7 +361,7 @@ void RedBlack::insert_case5(node* n){
         Right_Rotate(Grandparent(n));
     }
         
-    //if n is a right child and n's parent is a right child we rotate LEFT
+    //si n es un hijo derecho y el padre es un hijo derecho, rotar a la izquierda
     //       Gp(R)                
     //           \                        Pa(B)  
     //          Pa(B)         ==>        /    \
@@ -395,14 +369,14 @@ void RedBlack::insert_case5(node* n){
     //             n(R)              
     else
     {
-        //this is the only other possible case so we 'assert' instead of use a conditional
+        //unico caso posible, por eso assert en vez de un if
         assert (n == n->parent->right && n->parent == Grandparent(n)->right);
         Left_Rotate(Grandparent(n));
     }
 }
 
 /*
- * This method is in charge of displaying the tree in a tree form.
+ * Desplegar el arbol
  */
 void RedBlack::Display(node* ptr, int level) {
     int i;
@@ -548,32 +522,32 @@ void RedBlack::RBMenu(){
     {
         cout << endl;
         cout<<"---------------------"<<endl;
-        cout<<"RB Tree Implementation"<<endl;
+        cout<<"Arbol Rojo-Negro"<<endl;
         cout<<"---------------------"<<endl;
-        cout<<"\t1.Insert Element into the tree"<<endl;
-        cout<<"\t2.Display AVL Tree"<<endl;
-        cout<<"\t3.Delete Item from tree"<<endl;
-        cout<<"\t4.Exit"<<endl;
-        cout<<"\tEnter your Choice: ";
+        cout<<"\t1.Insertar elemento"<<endl;
+        cout<<"\t2.Desplegar Arbol"<<endl;
+        cout<<"\t3.Eliminar Elemento"<<endl;
+        cout<<"\t4.Salir"<<endl;
+        cout<<"\tIngrese su opcion: ";
         cin>>choice;
         switch(choice)
         {
         case 1:
-            cout<<"Enter value to be inserted: ";
+            cout<<"Ingrese el valor deseado: ";
             cin>>item;
             tree->RedBlack::Insert(item);
             break;
         case 2:
             if (tree->root == NULL)
             {
-                cout<<"Tree is Empty"<<endl;
+                cout<<"Arbol vacio"<<endl;
                 continue;
             }
-            cout<<"RB Tree:"<<endl;
+            cout<<"Arbol Rojo-Negro:"<<endl;
             tree->RedBlack::Display(tree->root,0);
             break;
         case 3:
-            cout<<"Enter the value to be deleted: ";
+            cout<<"Ingrese el elemento a eliminar: ";
             cin>>item;
             tree->Delete(item);
             break;
@@ -581,7 +555,7 @@ void RedBlack::RBMenu(){
             return;    
             break;
         default:
-            cout<<"Invalid Option"<<endl;
+            cout<<"Opcion Invalida"<<endl;
         }
     }
 }

@@ -31,7 +31,7 @@ private:
     color node_color(node* n);
     void replace_node(node* oldno, node* newno);
 
-    //verify rules are not broken
+    //verificar que las reglas no se rompan
     void verify_properties();
     void verify_property_1(node* root);
     void verify_property_2();
@@ -39,14 +39,14 @@ private:
     void verify_property_5(node* root);
     void verify_property_5_rec(node* n, int black_count, int* path_black_count);
 
-    //insert steps
+    //pasos para instertar
     void insert_case1(node* n);
     void insert_case2(node* n);
     void insert_case3(node* n);
     void insert_case4(node* n);
     void insert_case5(node* n);
     
-    //delete steps
+    //pasos para eliminar
     void delete_case1(node* n);
     void delete_case2(node* n);
     void delete_case3(node* n);
@@ -64,5 +64,5 @@ public:
     
 };
 
-#endif	/* REDBLACK_H */
+#endif	
 
