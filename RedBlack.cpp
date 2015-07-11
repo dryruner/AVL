@@ -393,6 +393,7 @@ void RedBlack::Display(node* ptr, int level) {
     }
 }
 
+/* Devuelve un puntero al nodo que tenga como valor _key */
 node* RedBlack::lookup_node(int _key){
     node* n = this->root;
     while (n != NULL)
@@ -414,41 +415,60 @@ node* RedBlack::lookup_node(int _key){
     return n;
 }
 
+/* Metodo que se encarga de empezar el proceso de eliminacion */
 void RedBlack::Delete(int _key){
-    node* n = lookup_node(_key);
+    node* n = lookup_node(_key); //puntero al nodo que se quiere eliminar
     node* child;
     if (n == NULL)
-        return;
+        //si no existe ..
+        return; 
+    
     if (n->left != NULL && n->right != NULL)
     {
+        //si el nodo a eliminar NO es un nodo hoja
+        
+        //se obtiene el nodo con el mayor valor de subarbol izquierdo
         node* pred = n->left;
         while(pred->right != NULL)
             pred = pred->right;
         
-        n->key   = pred->key;
+        //se sustituye el valor del nodo a eliminar con el mayor valor 
+        //del subarbol izquierdo
+        n->key   = pred->key; 
+        
+        //como ya podemos decir que 'eliminamos' el nodo ahora lo que nos
+        //interesa es deshacernos del nodo de mayor valor del subarbol izquierdo
         n = pred;
     }
-    assert(n->left == NULL || n->right == NULL);
-    child = n->right == NULL ? n->left  : n->right;
+    assert(n->left == NULL || n->right == NULL); //solo para estar seguros de q n tiene al menos un hijo que sea NULL
+    
+    //'child' es apunta al unico hijo que n tenga
+    child = n->right == NULL ? n->left  : n->right; 
+    
     
     if (node_color(n) == BLACK)
     {
-        n->color = node_color(child);
-        delete_case1(n);
+        n->color = node_color(child); 
+        delete_case1(n); //empezamos los pasos para eliminar el nodo
     }
     replace_node(n, child);
-    free(n);
-    verify_properties();
+    free(n); //liberamos el espacio de memoria
+    verify_properties(); //verificamos que todo este en orden
 }
 
+/* Si n es raiz entonces no hay nada que hacer y terminamos */
 void RedBlack::delete_case1(node* n){
     if (n->parent == NULL)
         return;
     else
-        delete_case2(n);
+        delete_case2(n); //pasamos al caso 2
 }
+
+/* Si el color del hermano de n es rojo entonces le cambiamos el color al padre de n para que sea Rojo y al 
+ * hermano le cambiamos el color para que sea Negro. Si n es hijo izquierdo entonces rotamos el padre
+ * de n a la izquierda, si es hijo derecho entonces rotamos el padre de n a la derecha */
 void RedBlack::delete_case2(node* n){
-    if (node_color(Sibling(n)) == RED)
+    if (node_color(Sibling(n)) == RED) //si el hermano de n es ROJO
     {
         n->parent->color = RED;
         Sibling(n)->color = BLACK;
@@ -457,10 +477,15 @@ void RedBlack::delete_case2(node* n){
         else
             Right_Rotate(n->parent);
     }
-    delete_case3(n);
+    delete_case3(n);// seguimos con el caso 3
 }
+
+/* Si el padre de n, el hermano de n, los hijos (izquierdo y derecho) del hermano de n son NEGROS entonces
+ * le cambiamos el color al hermano de n para que sea ROJO y volvemos a empezar con los casos de eliminacion
+ * pero esta ves pasamos al padre de n como parametro para el caso 1. Si este no fuera el caso entonces 
+ * proseguimos con el caso 4 */
 void RedBlack::delete_case3(node* n){
-        if (node_color(n->parent) == BLACK && node_color(Sibling(n)) == BLACK &&
+    if (node_color(n->parent) == BLACK && node_color(Sibling(n)) == BLACK &&
         node_color(Sibling(n)->left) == BLACK && node_color(Sibling(n)->right) == BLACK)
     {
         Sibling(n)->color = RED;
@@ -469,6 +494,10 @@ void RedBlack::delete_case3(node* n){
     else
         delete_case4(n);
 }
+
+/* Si el padre de n, el hermano de n, los hijos (izquierdo y derecho) del hermano de n son ROJOS entonces
+ * le cambiamos el color al hermano de n para que sea ROJO y al padre de n para que sea NEGRO.
+ * Si este no fuera el caso entonces  proseguimos con el caso 5 */
 void RedBlack::delete_case4(node* n){
     if (node_color(n->parent) == RED && node_color(Sibling(n)) == BLACK &&
         node_color(Sibling(n)->left) == BLACK && node_color(Sibling(n)->right) == BLACK)
@@ -479,6 +508,16 @@ void RedBlack::delete_case4(node* n){
     else
         delete_case5(n);
 }
+
+/* Si n es hijo izquierdo y  el color del hermano de n y del hijo derecho del hermano de n es NEGRO
+ * y el hijo izquierdo del hermano de n es de color ROJO entonces le cambiamos el color al hermano de n
+ * para que de ROJO y le cambiamos el color del hijo izquierdo de n a NEGRO y rotamos el hermano de n
+ * hacia la derecha.
+ * Si fuera el caso de que n es hijo derecho y el color del hermano de n y el color del hijo izquierdo del hermano
+ * de n es NEGRO y el color del hijo derecho del hermano de n es ROJO entonces le cambiamos el color al 
+ * hermano de n para que sea ROJO, al hijo derecho del hermano de n para que sea NEGRO y rotamos
+ * el hermano de n hacia la derecha.
+ * Luego proseguimos con el caso 6 */
 void RedBlack::delete_case5(node* n){
     if (n == n->parent->left && node_color(Sibling(n)) == BLACK &&
         node_color(Sibling(n)->left) == RED && node_color(Sibling(n)->right) == BLACK)
@@ -496,20 +535,27 @@ void RedBlack::delete_case5(node* n){
     }
     delete_case6(n);
 }
+
+/* Realizamos el caso 6 */
 void RedBlack::delete_case6(node* n){
+    //le cambiamos el color al hermano de n para que sea del mismo color que el padre de n
     Sibling(n)->color = node_color(n->parent);
+    
+    //al padre de n le ponemos color negro
     n->parent->color = BLACK;
+    
+    //si n es hijo izquierdo
     if (n == n->parent->left)
     {
-        assert (node_color(Sibling(n)->right) == RED);
-        Sibling(n)->right->color = BLACK;
-        Left_Rotate(n->parent);
+        assert (node_color(Sibling(n)->right) == RED); //nos aseguramos que el color del hijo derecho del hermano de n sea ROJO
+        Sibling(n)->right->color = BLACK; //le ponemos al hijo derecho del hermano de n el color NEGRO
+        Left_Rotate(n->parent); // rotamos el padre de n a la izquierda 
     }
     else
     {
-        assert (node_color(Sibling(n)->left) == RED);
-        Sibling(n)->left->color = BLACK;
-        Right_Rotate(n->parent);
+        assert (node_color(Sibling(n)->left) == RED); //nos aseguramos que el color del hijo izquierdo del hermano de n sea ROJO
+        Sibling(n)->left->color = BLACK;//le ponemos al hijo izquierdo del hermano de n el color NEGRO
+        Right_Rotate(n->parent);// rotamos el padre de n a la derecha 
     }
 }
 
