@@ -20,6 +20,7 @@ typedef struct rbtree_node {
     rbtree_node *left, *right, *parent;
 } node;
 
+
 class RedBlack {
 private:
     rbtree_node* root;

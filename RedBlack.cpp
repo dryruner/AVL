@@ -542,7 +542,7 @@ void RedBlack::delete_case6(node* n){
 void RedBlack::RBMenu(){
     using namespace std;
     RedBlack* tree = new RedBlack();
-    
+
     int choice, item;
     while (1)
     {
