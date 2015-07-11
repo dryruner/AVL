@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/AVL.o \
+	${OBJECTDIR}/BigTree.o \
 	${OBJECTDIR}/RedBlack.o \
 	${OBJECTDIR}/main.o
 
@@ -68,6 +69,11 @@ ${OBJECTDIR}/AVL.o: AVL.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/AVL.o AVL.cpp
+
+${OBJECTDIR}/BigTree.o: BigTree.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/BigTree.o BigTree.cpp
 
 ${OBJECTDIR}/RedBlack.o: RedBlack.cpp 
 	${MKDIR} -p ${OBJECTDIR}
