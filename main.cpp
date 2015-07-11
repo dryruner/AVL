@@ -1,30 +1,45 @@
+#include <stdlib.h>
+#include<stdio.h>
 #include<iostream>
 #include "AVL.h"
+#include "RedBlack.h"
+#include "BigTree.h"
+using namespace std;
 
-int main(int argc, char* argv[])
-{
-	AVL* root = NULL;
-	int vector[] = {15,6,18,3,7,17,20,2,4,13,9};
-//	int vector[] = {15};
-	const int length = sizeof(vector)/sizeof(int);
-	for(int i = 0; i< length;i++)
-		root = Insert(root, vector[i]);
-	
-	printf("\nInOrder: \n");
-	InOrder(root);
+int main(int argc, char* argv[]) {
+    int opcion = 0;
+    do {
+        system("cls");
+        cout << "||Menú de selección de ejemplos de Árboles||" << endl;
+        cout << "1 - AVL" << endl;
+        cout << "2 - Árbol Rojo-Negro" << endl;
+        cout << "3 - Árbol B" << endl;
+        cout << "0 - Terminar" << endl;
+        cout << " Seleccione una opcion -> ";
+        cin >> opcion;
 
-	int input;
-	printf("\nplease input the value you want to delete: ");
-	scanf("%d",&input);
-	
-	while(1)
-	{
-		root = Delete(root, input);
-		printf("\nAfter delete %u:\n",input);
-		InOrder(root);
-		printf("\nplease input another value you want to delete: ");
-		scanf("%u",&input);
-	}
-	printf("\n");
-	return 0;
+        switch (opcion) {
+            case 1:
+                AVLTree::AVLmenu();
+                break;
+            case 2:
+                RedBlack::RBMenu();
+                break;
+            case 3:
+                BigTree::BigMenu();
+                break;
+            default:
+                if (opcion != 0) {
+                    cout << "Opción no Valida" << endl;
+                    system("pause");
+                }
+                break;
+        }
+    } while (opcion != 0);
+    cout << "Fin del programa" << endl;
+    system("pause");
 }
+
+
+
+
